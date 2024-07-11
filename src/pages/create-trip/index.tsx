@@ -20,9 +20,7 @@ export function CreateTripPage() {
   const [ownerEmail, setOwnerEmail] = useState('')
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
 
-  // const displayedDate = format(eventStartAndEndDates.to, "d' de 'LLL").concat(' até ').concat(format(eventStartAndEndDates.from, "d' de 'LLL"))
-
-  const [emailsToInvite, setEmailsToInvite] = useState([])
+  const [emailsToInvite, setEmailsToInvite] = useState<string[]>([])
 
   function openGuestsInput() {
     setIsGuestsInputOpen(true)
