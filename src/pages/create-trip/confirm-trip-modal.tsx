@@ -1,16 +1,31 @@
 import { User, X } from "lucide-react"
 import { FormEvent } from "react"
 import { Button } from "../../components/button"
+import { DateRange } from "react-day-picker"
+import { format } from "date-fns"
 
 interface ConfirmTripModalProps {
   closeConfirmTripModal: () => void
+  setOwnerName: (name: string) => void
+  setOwnerEmail: (email: string) => void
+  destination: string,
+  eventStartAndEndDates: DateRange | undefined,
   createTrip: (event: FormEvent<HTMLFormElement>) => void
 }
 
 export function ConfirmTripModal({
   closeConfirmTripModal,
-  createTrip
+  createTrip,
+  destination,
+  eventStartAndEndDates,
+  setOwnerEmail,
+  setOwnerName
 }: ConfirmTripModalProps) {
+
+  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from  && eventStartAndEndDates.to
+  ? format(eventStartAndEndDates.from, "d' de 'LLL").concat(' até ').concat(format(eventStartAndEndDates.to, "d' de 'LLL"))
+  : null
+
   return(
     <div className='fixed inset-0 bg-black/60 flex items-center justify-center'>
           <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
@@ -22,7 +37,8 @@ export function ConfirmTripModal({
                 </button>
               </div>
               <p className='text-sm text-zinc-400'>
-                Para concluir a criação da viagem para <span className='font-semibold text-zinc-100'>São Paulo, Brasil</span> nas datas de <span className='font-semibold text-zinc-100'></span>
+                Para concluir a criação da viagem para <span className='font-semibold text-zinc-100'>{destination}</span> nas datas de 
+                <span className='font-semibold text-zinc-100'> {displayedDate}</span>
               </p>
             </div>
 
@@ -33,7 +49,8 @@ export function ConfirmTripModal({
                   name='name'
                   placeholder="Seu nome completo"
                   className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
-                />
+                  onChange={event => setOwnerName(event.target.value)}
+                  />
               </div>
               <div className='h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2'>
                 <User className='text-zinc-400 size-5' />
@@ -42,6 +59,7 @@ export function ConfirmTripModal({
                   name='email'
                   placeholder="Seu e-mail pessoal"
                   className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+                  onChange={event => setOwnerEmail(event.target.value)}
                 />
               </div>
               <Button type='submit' variant="primary" size="full">
