@@ -38,7 +38,7 @@ export function ImportantLinks({
                 <div key={link.id} className="flex items-center justify-between gap-4">
                   <div className="space-y-1.5 flex-1">
                     <span className="block font-medium text-zinc-100">{link.title}</span>
-                    <a href="#" className="block text-xs text-zinc-400 truncate hover:text-zinc-200">
+                    <a href={link.url} target="__blank" className="block text-xs text-zinc-400 truncate hover:text-zinc-200">
                       {link.url}
                     </a>
                   </div>
